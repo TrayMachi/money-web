@@ -1,10 +1,48 @@
-import React from "react";
+"use client";
 import Form from "@/components/Form";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+import { AuthService } from "@/service";
 
 const RegisterPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const handleSubmit = async (data: any) => {
+    const { userId, name, email, password } = data;
+
+    if (!userId || !name || !email || !password) {
+      return toast.error("Please fill all fields");
+    }
+
+    const authService = AuthService.getInstance();
+
+    const userData = {
+      email,
+      password,
+      userId,
+      name,
+    };
+
+    setLoading(true);
+    authService
+      .register(userData)
+      .then((res: any) => {
+        setLoading(false);
+        toast.success("Registeration Successful")
+        router.push("/login");
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+        setLoading(false);
+      });
+  };
   return (
-    <div className="flex flex-col justify-center min-h-screen">
-      <h1 className="text-7xl mb-8 text-center font-bold text-gray-800">
+    <div className="flex min-h-screen flex-col justify-center">
+      <h1 className="mb-8 text-center text-7xl font-bold text-gray-800">
         Register Page
       </h1>
       <Form
@@ -34,7 +72,9 @@ const RegisterPage = () => {
             placeholder: "Enter your password",
           },
         ]}
-        btnTitle="Login"
+        btnTitle="Register"
+        onSubmit={handleSubmit}
+        loading={loading}
       ></Form>
     </div>
   );
