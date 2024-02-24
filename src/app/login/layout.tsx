@@ -15,8 +15,8 @@ export default function LoginLayout({
 }>) {
   return (
     <main>
-        <ToastContainer />
-        {children}
+      <ToastContainer />
+      {children}
     </main>
   );
 }
