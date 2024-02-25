@@ -12,7 +12,7 @@ export default function Home() {
         </div>
         <div>
           <Link
-            href={"/addCard"}
+            href={"/income_expense/new"}
             className="mx-[45vw] my-2 flex items-center justify-center rounded-md bg-[#94a5df] p-2"
           >
             Add Card
