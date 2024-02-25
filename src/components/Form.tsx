@@ -40,6 +40,7 @@ const Form: FC<IField> = ({ fields, btnTitle, onSubmit, loading }) => {
               type={field.type}
               name={field.name}
               value={field.value}
+              min={field.min}
               onChange={(e)=>
                 setData({ ...data, [field.name]: e.target.value })
               }
