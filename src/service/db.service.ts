@@ -1,5 +1,5 @@
 import client from "@/config/appwrite.config";
-import { Databases, Permission, ID, Role } from "appwrite";
+import { Databases, Permission, ID, Role, Query } from "appwrite";
 
 class DBService {
   private static instance: DBService;
@@ -13,10 +13,18 @@ class DBService {
     return DBService.instance;
   }
 
-  public create = (data: any, success: any) => {
+  public getDocuments = async (val: string) => {
+    return await this.db.listDocuments(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      [Query.equal("userId", [val])],
+    );
+  };
+
+  public create = async (data: any, success: any) => {
     const { userId } = data;
-    console.log(data)
-    this.db
+    console.log(data);
+    await this.db
       .createDocument(
         process.env.NEXT_APPWRITE_DB_ID as string,
         process.env.NEXT_APPWRITE_COLLECTION_ID as string,
