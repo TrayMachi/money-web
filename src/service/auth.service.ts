@@ -14,7 +14,7 @@ class AuthService {
   }
 
   public login = (email: string, password: string) => {
-    return AuthService.account.createEmailPasswordSession(email, password);
+    return AuthService.account.createEmailSession(email, password);
   };
   public register = async (data: any) => {
     const { email, password, userId, name }: any = data;
