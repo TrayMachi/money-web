@@ -26,7 +26,7 @@ const AddIncomeExpense: NextPage = () => {
 
   const handleSubmit = (data: any) => {
     data.incomeExpense = data.incomeExpense == "true" ? true : false;
-    if (!data.name || !data.incomeExpense || !data.amount || !data.date) {
+    if (!data.name || !data.amount || !data.date || data.incomeExpense == null) {
       return alert("Please fill all field");
     }
 
