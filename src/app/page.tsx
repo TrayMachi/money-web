@@ -36,7 +36,7 @@ export default function Home() {
       <div className="mt-24">
         <div>
           <Link
-            href={"/income_expense/new"}
+            href={"/records/new"}
             className="mx-[45vw] my-2 flex items-center justify-center rounded-md bg-[#94a5df] p-2"
           >
             Add Card
@@ -44,11 +44,44 @@ export default function Home() {
         </div>
       </div>
       {user ? (
-        <div className="w-full h-auto p-14 flex flex-col gap-10">
-          <h1 className="text-4xl font-bold text-center w-full mt-10">
+        <div className="flex h-auto w-full flex-col items-center gap-10 px-14">
+          <h1 className="mt-10 w-full text-center text-2xl font-bold">
             Income Expense Tracker
           </h1>
-          <table></table>
+          <table className="mx-auto w-4/5">
+            <thead className="bg-black py-2 text-white">
+              <th>No</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Action</th>
+            </thead>
+            <tbody className="text-center">
+              {documents.map((data: any, index: number) => (
+                <tr key={data["$id"]}>
+                  <td>{index + 1}</td>
+                  <td>{data.name}</td>
+                  <td>{data.type}</td>
+                  <td>{data.amount}</td>
+                  <td>{data.description}</td>
+                  <td>{data.date}</td>
+                  <td className="flex items-center justify-center gap-3">
+                    <Link href={`/records/edit/${data["$id"]}`}>
+                      Edit
+                    </Link>
+                    <button
+                      type="button"
+                      className="border-black bg-transparent text-red-700"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <></>
