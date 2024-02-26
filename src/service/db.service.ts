@@ -13,37 +13,46 @@ class DBService {
     return DBService.instance;
   }
 
-  public getDocuments = async (val: string) => {
+  public getDocuments = async (userId: string) => {
     return await this.db.listDocuments(
       process.env.NEXT_APPWRITE_DB_ID as string,
       process.env.NEXT_APPWRITE_COLLECTION_ID as string,
-      [Query.equal("userId", [val])],
+      [Query.equal("userId", [userId])],
+    );
+  };
+
+  public getDocument = async (docId: string) => {
+    return await this.db.getDocument(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      docId,
     );
   };
 
   public create = async (data: any, success: any) => {
     const { userId } = data;
     console.log(data);
-    await this.db
-      .createDocument(
-        process.env.NEXT_APPWRITE_DB_ID as string,
-        process.env.NEXT_APPWRITE_COLLECTION_ID as string,
-        ID.unique(),
-        data,
-        [
-          Permission.read(Role.user(userId)),
-          Permission.update(Role.user(userId)),
-          Permission.delete(Role.user(userId)),
-          Permission.write(Role.user(userId)),
-        ],
-      )
-      .then(() => {
-        success(true);
-      })
-      .catch((error: any) => {
-        console.log(error);
-        success(false);
-      });
+    await this.db.createDocument(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      ID.unique(),
+      data,
+      [
+        Permission.read(Role.user(userId)),
+        Permission.update(Role.user(userId)),
+        Permission.delete(Role.user(userId)),
+        Permission.write(Role.user(userId)),
+      ],
+    );
+  };
+
+  public update = async (docId: string, data: any) => {
+    return await this.db.updateDocument(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      docId,
+      data,
+    );
   };
 }
 
