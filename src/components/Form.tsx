@@ -50,7 +50,7 @@ const Form: FC<IField> = ({ fields, btnTitle, onSubmit, loading }) => {
           </div>
         ))}
         {["/login", "/register"].includes(pathname) && (
-          <p className="w-full text-end text-sm font-light italic text-slate-800">
+          <p className="w-full text-end text-sm font-light italic text-slate-800 dark:text-white">
             {pathname == "/login" ? (
               <>
                 Not a member?{" "}
