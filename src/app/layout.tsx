@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { cn } from "@/utils/cn";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+export const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Money Management",
@@ -18,9 +23,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastContainer />
-        {children}
+      <body
+        className={cn(
+          "bg-background min-h-screen font-sans antialiased",
+          fontSans.variable,
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
