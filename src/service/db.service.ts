@@ -54,6 +54,14 @@ class DBService {
       data,
     );
   };
+
+  public delete = async (docId: string) => {
+    return await this.db.deleteDocument(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      docId,
+    );
+  };
 }
 
 export default DBService;
