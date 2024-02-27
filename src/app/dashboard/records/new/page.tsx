@@ -16,8 +16,17 @@ const AddIncomeExpense: NextPage = () => {
   const dbService = DBService.getInstance();
 
   const fetchUser = async () => {
-    const data = await authService.getAccount();
-    setUser(data);
+    try {
+      const data = await authService.getAccount();
+      if (!data || data === null) {
+        throw new Error("User not found or response is null");
+      }
+      
+      setUser(data);
+
+    } catch {
+      router.push("/login");
+    }
   };
 
   useEffect(() => {
@@ -28,14 +37,14 @@ const AddIncomeExpense: NextPage = () => {
     if (!data.name || !data.amount || !data.date || !data.type) {
       return alert("Please fill all field");
     }
-    data.date = data.date.replace("-", "/").replace("-", "/")
+    data.date = data.date.replace("-", "/").replace("-", "/");
     dbService.create({ ...data, userId: user["$id"] }, setSuccess);
   };
 
   useEffect(() => {
     if (success) {
       alert("Added Successfully");
-      router.push("/")
+      router.push("/");
     }
   }, [success]);
 
