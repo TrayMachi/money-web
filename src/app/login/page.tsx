@@ -25,8 +25,7 @@ const LoginPage = () => {
       .then(() => {
         toast.success("Login Successful");
         setLoading(false);
-        router.push("/");
-        router.push("/");
+        router.push("/dashboard");
       })
       .catch((error: any) => {
         if (error.message.includes("Invalid credentials")) {

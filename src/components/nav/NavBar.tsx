@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AuthService } from "@/service";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
   const [user, setUser] = useState<any>(null);
   const authService = AuthService.getInstance();
+
+  const router = useRouter();
 
   const fetchUser = async () => {
     try {
@@ -17,10 +20,21 @@ const NavBar = () => {
     }
   };
 
+  const logOut = async () => {
+    authService
+      .logout()
+      .then(() => {
+        setUser(null);
+        router.push("/")
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+      });
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
-
 
   return (
     <nav className="fixed top-0 w-full bg-[#f2f2f3]">
@@ -35,19 +49,7 @@ const NavBar = () => {
                 <p className="">
                   Welcome, <span className="font-bold">{user.name}</span>
                 </p>
-                <button
-                  onClick={() =>
-                    authService
-                      .logout()
-                      .then(() => {
-                        setUser(null);
-                      })
-                      .catch((error: any) => {
-                        toast.error(error.message);
-                      })
-                  }
-                  className="hover:text-red-600"
-                >
+                <button onClick={() => logOut()} className="hover:text-red-600">
                   Logout
                 </button>
               </>
@@ -62,6 +64,6 @@ const NavBar = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default NavBar;
