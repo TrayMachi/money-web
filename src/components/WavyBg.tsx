@@ -10,9 +10,9 @@ export const WavyBackground = ({
   colors,
   waveWidth,
   backgroundFill,
-  blur = 10,
+  blur = 14,
   speed = "fast",
-  waveOpacity = 0.3,
+  waveOpacity = 0.45,
   ...props
 }: {
   children?: any;
@@ -85,13 +85,13 @@ export const WavyBackground = ({
 
   let animationId: number;
   const render = () => {
-    let theme = localStorage.getItem("theme");
+    const theme = localStorage.getItem("theme");
     let bg = "";
 
-    if (theme === "dark") {
-      bg = "#09090b";
-    } else {
+    if (theme === "light") {
       bg = "#f0f0f0";
+    } else {
+      bg = "#09090b";
     }
 
     ctx.fillStyle = bg; // Set the background color based on the theme
