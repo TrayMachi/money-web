@@ -29,7 +29,15 @@ class DBService {
     );
   };
 
-  public create = async (data: any, success: any) => {
+  public getDocumentsByType = async (userId: string, type: string) => {
+    return await this.db.listDocuments(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      [Query.equal("userId", [userId]), Query.equal("type", [type])],
+    );
+  };
+
+  public create = async (data: any) => {
     const { userId } = data;
     console.log(data);
     await this.db.createDocument(
