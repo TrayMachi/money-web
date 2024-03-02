@@ -1,15 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { cn } from "@/utils/cn";
+import { LiaMoneyBillWaveSolid } from "react-icons/lia";
+import { ModeToggle } from "../ThemeToggle";
 import { AuthService } from "@/service";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
-const NavBar = () => {
+function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   const [user, setUser] = useState<any>(null);
   const authService = AuthService.getInstance();
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const fetchUser = async () => {
     try {
@@ -25,45 +28,74 @@ const NavBar = () => {
       .logout()
       .then(() => {
         setUser(null);
-        router.push("/")
+        router.push("/");
       })
       .catch((error: any) => {
-        toast.error(error.message);
+        //toast
       });
   };
+
+  const displayLogOut = pathname === "/dashboard" ? "hidden" : "";
 
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <nav className="fixed top-0 w-full bg-[#f2f2f3]">
-      <div className="m-5 flex items-center justify-between">
-        <Link href="/" className="font-medium">
-          © Code By Tristan.A
-        </Link>
-        <div>
-          <ul className="flex space-x-8 font-medium">
-            {user ? (
-              <>
-                <p className="">
-                  Welcome, <span className="font-bold">{user.name}</span>
-                </p>
-                <button onClick={() => logOut()} className="hover:text-red-600">
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/login">Login</Link>
-                <Link href="/register">Register</Link>
-              </>
-            )}
-          </ul>
-        </div>
+    <nav
+      className={cn(
+        "fixed left-0 top-0 z-30 flex w-full items-center justify-between px-2 md:px-6 backdrop-blur-md overflow-hidden py-4",
+        className,
+      )}
+      {...props}
+    >
+      {/* Logo on the left */}
+      <div className="flex items-center">
+        <LiaMoneyBillWaveSolid size={"50px"} />
+        <span className="px-4 text-m md:text-lg font-bold">Money - Management</span>
+      </div>
+
+      {/* Navigation links on the right */}
+      <div className="flex items-center space-x-4 lg:space-x-6">
+        {user ? (
+          <>
+            <ModeToggle />
+            <p className="text-sm">
+              Welcome,{" "}
+              <span className="hover:text-primary font-medium transition-colors">
+                {user.name}
+              </span>
+            </p>
+            <button onClick={() => logOut()} className={`hover:text-[#a03f3f] font-medium text-sm transition-colors ${displayLogOut}`}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <ModeToggle />
+            <Link
+              href="/"
+              className="hover:text-primary text-sm font-medium transition-colors md:block hidden"
+            >
+              Home
+            </Link>
+            <Link
+              href="/login"
+              className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
-};
+}
 
 export default NavBar;
