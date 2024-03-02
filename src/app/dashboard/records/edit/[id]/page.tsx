@@ -28,7 +28,6 @@ const EditIncomeExpense: NextPage = () => {
 
     setLoading(true);
     data.date = data.date.replace("-", "/").replace("-", "/");
-    console.log(data)
     dbService
       .update(id.toString(), data)
       .then(() => {
@@ -94,6 +93,34 @@ const EditIncomeExpense: NextPage = () => {
               label: "Expense",
               type: "radio",
               value: "Expense",
+            },
+            {
+              name: "category",
+              label: "Food & Beverages",
+              type: "radio",
+              placeholder: "",
+              value: "fnb",
+            },
+            {
+              name: "category",
+              label: "Entertainment",
+              type: "radio",
+              placeholder: "",
+              value: "entertainment",
+            },
+            {
+              name: "category",
+              label: "Fashion",
+              type: "radio",
+              placeholder: "",
+              value: "fashion",
+            },
+            {
+              name: "category",
+              label: "Transportation",
+              type: "radio",
+              placeholder: "",
+              value: "transportation",
             },
             {
               name: "amount",

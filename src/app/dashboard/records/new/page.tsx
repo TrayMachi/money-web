@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 const AddIncomeExpense: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
-  const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
 
   const authService = AuthService.getInstance();
@@ -34,19 +33,14 @@ const AddIncomeExpense: NextPage = () => {
   }, []);
 
   const handleSubmit = (data: any) => {
-    if (!data.name || !data.amount || !data.date || !data.type) {
+    if (!data.name || !data.amount || !data.date || !data.type || !data.category) {
       return alert("Please fill all field");
     }
     data.date = data.date.replace("-", "/").replace("-", "/");
-    dbService.create({ ...data, userId: user["$id"] }, setSuccess);
+    dbService.create({ ...data, userId: user["$id"] });
+    router.push("/dashboard");
   };
 
-  useEffect(() => {
-    if (success) {
-      alert("Added Successfully");
-      router.push("/");
-    }
-  }, [success]);
 
   return (
     <div className="flex min-h-screen flex-col justify-center">
@@ -76,6 +70,41 @@ const AddIncomeExpense: NextPage = () => {
             type: "radio",
             placeholder: "",
             value: "Expense",
+          },
+          {
+            name: "category",
+            label: "Food & Beverages",
+            type: "radio",
+            placeholder: "",
+            value: "Food & Beverages",
+          },
+          {
+            name: "category",
+            label: "Entertainment",
+            type: "radio",
+            placeholder: "",
+            value: "Entertainment",
+          },
+          {
+            name: "category",
+            label: "Fashion",
+            type: "radio",
+            placeholder: "",
+            value: "Fashion",
+          },
+          {
+            name: "category",
+            label: "Transportation",
+            type: "radio",
+            placeholder: "",
+            value: "Transportation",
+          },
+          {
+            name: "category",
+            label: "Salary",
+            type: "radio",
+            placeholder: "",
+            value: "Salary",
           },
           {
             name: "amount",
