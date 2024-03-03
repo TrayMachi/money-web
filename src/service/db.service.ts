@@ -29,11 +29,27 @@ class DBService {
     );
   };
 
+  public getDocumentsByCategory = async (userId: string, category: string) => {
+    return await this.db.listDocuments(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      [Query.equal("userId", [userId]), Query.equal("category", [category])],
+    );
+  };
+
   public getDocumentsByType = async (userId: string, type: string) => {
     return await this.db.listDocuments(
       process.env.NEXT_APPWRITE_DB_ID as string,
       process.env.NEXT_APPWRITE_COLLECTION_ID as string,
       [Query.equal("userId", [userId]), Query.equal("type", [type])],
+    );
+  };
+
+  public getDocumentsBySearch = async (userId: string, keyword: string) => {
+    return await this.db.listDocuments(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      [Query.equal("userId", [userId]), Query.search("name", keyword)],
     );
   };
 
