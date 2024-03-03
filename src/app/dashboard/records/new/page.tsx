@@ -107,6 +107,13 @@ const AddIncomeExpense: NextPage = () => {
             value: "Salary",
           },
           {
+            name: "category",
+            label: "Gift",
+            type: "radio",
+            placeholder: "",
+            value: "Gift",
+          },
+          {
             name: "amount",
             label: "Amount",
             type: "number",
