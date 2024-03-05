@@ -22,7 +22,7 @@ const EditIncomeExpense: NextPage = () => {
   });
 
   const handleSubmit = (data: any) => {
-    if (!data.name || !data.amount || !data.date || !data.type) {
+    if (!data.name || !data.amount || !data.date || !data.type || !data.category) {
       return alert("Please fill all field");
     }
 
@@ -121,6 +121,20 @@ const EditIncomeExpense: NextPage = () => {
               type: "radio",
               placeholder: "",
               value: "transportation",
+            },
+            {
+              name: "category",
+              label: "Salary",
+              type: "radio",
+              placeholder: "",
+              value: "Salary",
+            },
+            {
+              name: "category",
+              label: "Gift",
+              type: "radio",
+              placeholder: "",
+              value: "Gift",
             },
             {
               name: "amount",
