@@ -35,14 +35,14 @@ export default function Home() {
       setUser(res);
 
       dbService
-        .getDocumentsByType(res["$id"], "Income")
+        .getDocumentsOfAmount(res["$id"], "Income")
         .then((res) => {
           setIncome(res.documents);
           setLoading(false);
         })
         .catch((error: any) => console.log(error));
       dbService
-        .getDocumentsByType(res["$id"], "Expense")
+        .getDocumentsOfAmount(res["$id"], "Expense")
         .then((res) => {
           setExpense(res.documents);
           setLoading(false);
@@ -197,8 +197,13 @@ export default function Home() {
                 </div>
                 <div className="col-span-2 xl:col-span-1 xl:w-[40vw]">
                   <Card className="h-full">
-                    <CardHeader>
-                      <CardTitle>Recent Income & Expense</CardTitle>
+                    <CardHeader className="justify-between">
+                      <div className="flex justify-between">
+                        <CardTitle>Recent Income & Expense</CardTitle>
+                        <CardDescription className="text-muted-foreground text-end text-xs">
+                          *Right click on number to do some cool shit
+                        </CardDescription>
+                      </div>
                       <CardDescription className="text-[#64ca75]">
                         You've saved {totalDoc} transaction.
                       </CardDescription>
