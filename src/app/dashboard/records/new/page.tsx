@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import Form from "@/components/Form";
 import { useEffect, useState } from "react";
 import { DBService, AuthService } from "@/service";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 const AddIncomeExpense: NextPage = () => {

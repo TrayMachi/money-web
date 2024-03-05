@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Login | Money Management",
@@ -15,7 +13,6 @@ export default function LoginLayout({
 }>) {
   return (
     <main>
-      <ToastContainer />
       {children}
     </main>
   );

@@ -38,7 +38,7 @@ import { useEffect, useState } from "react";
 import SelectRe from "./SelectRe";
 import { Input } from "./ui/input";
 import Link from "next/link";
-import { cn } from "@/utils/cn";
+import { toast } from "sonner"
 
 export function TableDynamic() {
   const [documents, setDocuments] = useState<any[]>([]);
@@ -100,10 +100,12 @@ export function TableDynamic() {
 
   const handleType = (type: string) => {
     if (type === "All") {
+      setLoading(true);
       dbService
         .getDocuments(user["$id"])
         .then((res) => {
           setDocuments(res.documents);
+          toast.success(`Data has been loaded to type ${type}`, { duration: 3000 });
           setLoading(false);
         })
         .catch((error: any) => console.log(error));

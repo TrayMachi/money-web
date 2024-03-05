@@ -1,9 +1,9 @@
 "use client";
 import Form from "@/components/Form";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { AuthService } from "@/service";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);

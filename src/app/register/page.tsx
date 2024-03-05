@@ -1,7 +1,7 @@
 "use client";
 import Form from "@/components/Form";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { AuthService } from "@/service";
