@@ -26,7 +26,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "react-toastify": "^10.0.4",
     "recharts": "^2.12.1",
     "simplex-noise": "^4.0.1",
     "sonner": "^1.4.3",
