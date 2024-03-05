@@ -9,10 +9,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { AuthService, DBService } from "@/service";
 import { useEffect, useState } from "react";
 import SelectRe from "./SelectRe";
 import { Input } from "./ui/input";
+import Link from "next/link";
+import { cn } from "@/utils/cn";
 
 export function TableDynamic() {
   const [documents, setDocuments] = useState<any[]>([]);
@@ -41,7 +67,6 @@ export function TableDynamic() {
       .then((res) => {
         setDocuments(res.documents);
         setLoading(false);
-        console.log(res);
       })
       .catch((error: any) => console.log(error));
   };
@@ -201,22 +226,73 @@ export function TableDynamic() {
         </TableHeader>
         <TableBody>
           {documents.map((data: any, index: number) => (
-            <TableRow key={data["$id"]}>
-              <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>
-                <span
-                  className={`border ${data.type === "Income" ? "text-[#64ca75]" : "text-red-500"} my-1 rounded px-2`}
-                >
-                  {data.type}
-                </span>{" "}
-                {data.name}
-              </TableCell>
-              <TableCell>{indonesianCurrency(data.amount)}</TableCell>
-              <TableCell className={styleCategory(data.category)}>
-                {data.category}
-              </TableCell>
-              <TableCell>{data.date}</TableCell>
-            </TableRow>
+            <ContextMenu>
+              <TableRow key={data["$id"]}>
+                <ContextMenuTrigger>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                </ContextMenuTrigger>
+                <TableCell>
+                  <span
+                    className={`border ${data.type === "Income" ? "text-[#64ca75]" : "text-red-500"} my-1 rounded px-2`}
+                  >
+                    {data.type}
+                  </span>{" "}
+                  <HoverCard>
+                    <HoverCardTrigger>{data.name}</HoverCardTrigger>
+                    <HoverCardContent>
+                      <div className="p-1">
+                        <h1 className="text-muted-foreground my-1">
+                          Description:
+                        </h1>
+                        <hr />
+                        <p className="my-1">{data.description}</p>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                </TableCell>
+                <TableCell>{indonesianCurrency(data.amount)}</TableCell>
+                <TableCell className={styleCategory(data.category)}>
+                  {data.category}
+                </TableCell>
+                <TableCell>{data.date}</TableCell>
+              </TableRow>
+              <AlertDialog>
+                <ContextMenuContent>
+                  <ContextMenuLabel>Actions</ContextMenuLabel>
+                  <ContextMenuSeparator />
+                  <AlertDialogTrigger asChild>
+                    <ContextMenuItem>Delete</ContextMenuItem>
+                  </AlertDialogTrigger>
+                  <ContextMenuItem>
+                    <Link href={`dashboard/records/edit/${data["$id"]}`}>
+                      Edit
+                    </Link>
+                  </ContextMenuItem>
+                </ContextMenuContent>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive hover:bg-red-800"
+                      onClick={() => {
+                        handleDelete(data["$id"]);
+                      }}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </ContextMenu>
           ))}
         </TableBody>
         <TableFooter></TableFooter>
