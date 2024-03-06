@@ -29,19 +29,11 @@ class DBService {
     );
   };
 
-  public getDocumentsByCategory = async (userId: string, category: string) => {
+  public getDocumentsByTarget = async (userId: string, target: string, value: string) => {
     return await this.db.listDocuments(
       process.env.NEXT_APPWRITE_DB_ID as string,
       process.env.NEXT_APPWRITE_COLLECTION_ID as string,
-      [Query.equal("userId", [userId]), Query.equal("category", [category])],
-    );
-  };
-
-  public getDocumentsByType = async (userId: string, type: string) => {
-    return await this.db.listDocuments(
-      process.env.NEXT_APPWRITE_DB_ID as string,
-      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
-      [Query.equal("userId", [userId]), Query.equal("type", [type])],
+      [Query.equal("userId", [userId]), Query.equal(target, [value])],
     );
   };
 
@@ -53,6 +45,17 @@ class DBService {
         Query.equal("userId", [userId]),
         Query.equal("type", [type]),
         Query.select(["type", "amount", "userId"]),
+      ],
+    );
+  };
+
+  public getDocumentsOfTypeCategory = async (userId: string) => {
+    return await this.db.listDocuments(
+      process.env.NEXT_APPWRITE_DB_ID as string,
+      process.env.NEXT_APPWRITE_COLLECTION_ID as string,
+      [
+        Query.equal("userId", [userId]),
+        Query.select(["type", "category", "amount", "userId"]),
       ],
     );
   };

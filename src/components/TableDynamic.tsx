@@ -38,7 +38,7 @@ import { useEffect, useState } from "react";
 import SelectRe from "./SelectRe";
 import { Input } from "./ui/input";
 import Link from "next/link";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 export function TableDynamic() {
   const [documents, setDocuments] = useState<any[]>([]);
@@ -51,6 +51,7 @@ export function TableDynamic() {
   const handleDelete = async (id: string) => {
     try {
       await dbService.delete(id);
+      toast.success("Data has been deleted", { duration: 3000 });
       setDocuments((prev: any) =>
         prev.filter((data: any) => data["$id"] != id),
       );
@@ -105,15 +106,21 @@ export function TableDynamic() {
         .getDocuments(user["$id"])
         .then((res) => {
           setDocuments(res.documents);
-          toast.success(`Data has been loaded to type ${type}`, { duration: 3000 });
+          toast.success(`Data has been loaded to type ${type}`, {
+            duration: 3000,
+          });
           setLoading(false);
         })
         .catch((error: any) => console.log(error));
     }
+    setLoading(true);
     dbService
-      .getDocumentsByType(user["$id"], type)
+      .getDocumentsByTarget(user["$id"], "type", type)
       .then((res) => {
         setDocuments(res.documents);
+        toast.success(`Data has been filtered to status ${type}`, {
+          duration: 3000,
+        });
         setLoading(false);
       })
       .catch((error: any) => console.log(error));
@@ -121,18 +128,26 @@ export function TableDynamic() {
 
   const handleCategory = (category: string) => {
     if (category === "All") {
+      setLoading(true);
       dbService
         .getDocuments(user["$id"])
         .then((res) => {
           setDocuments(res.documents);
+          toast.success(`Data has been filtered to category ${category}`, {
+            duration: 3000,
+          });
           setLoading(false);
         })
         .catch((error: any) => console.log(error));
     }
+    setLoading(true);
     dbService
-      .getDocumentsByCategory(user["$id"], category)
+      .getDocumentsByTarget(user["$id"], "category", category)
       .then((res) => {
         setDocuments(res.documents);
+        toast.success(`Data has been filtered to category ${category}`, {
+          duration: 3000,
+        });
         setLoading(false);
       })
       .catch((error: any) => console.log(error));
@@ -234,13 +249,15 @@ export function TableDynamic() {
                   <TableCell className="font-medium">{index + 1}</TableCell>
                 </ContextMenuTrigger>
                 <TableCell>
-                  <span
-                    className={`border ${data.type === "Income" ? "text-[#64ca75]" : "text-red-500"} my-1 rounded px-2`}
-                  >
-                    {data.type}
-                  </span>{" "}
                   <HoverCard>
-                    <HoverCardTrigger>{data.name}</HoverCardTrigger>
+                    <HoverCardTrigger>
+                      <span
+                        className={`border ${data.type === "Income" ? "text-[#64ca75]" : "text-red-500"} my-1 rounded px-2`}
+                      >
+                        {data.type}
+                      </span>{" "}
+                      {data.name}
+                    </HoverCardTrigger>
                     <HoverCardContent>
                       <div className="p-1">
                         <h1 className="text-muted-foreground my-1">
