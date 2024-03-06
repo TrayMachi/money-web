@@ -1,8 +1,8 @@
 "use client";
 import NavItem from "./NavItem";
 import { useState } from "react";
-import { MdDashboard, MdDelete } from "react-icons/md";
-import { FaPlus, FaEdit } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import Link from "next/link";
 
@@ -14,18 +14,12 @@ const SideNav = () => {
         <NavItem selected={selected === 0} id={0} setSelected={setSelected}>
           <MdDashboard className="fill-white dark:fill-zinc-950" />
         </NavItem>
-        <Link href="dashboard/records/new">
+        <Link href="dashboard/transaction/new">
           <NavItem selected={selected === 1} id={1} setSelected={setSelected}>
             <FaPlus className="fill-white dark:fill-zinc-950" />
           </NavItem>
         </Link>
         <NavItem selected={selected === 2} id={2} setSelected={setSelected}>
-          <FaEdit className="fill-white dark:fill-zinc-950" />
-        </NavItem>
-        <NavItem selected={selected === 3} id={3} setSelected={setSelected}>
-          <MdDelete className="fill-white dark:fill-zinc-950" />
-        </NavItem>
-        <NavItem selected={selected === 4} id={4} setSelected={setSelected}>
           <RiLogoutBoxLine className="fill-white dark:fill-zinc-950" />
         </NavItem>
       </div>

@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
-import { ModeToggle } from "../ThemeToggle";
+import { ThemeToggle } from "../ThemeToggle";
 import { AuthService } from "@/service";
 import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   const [user, setUser] = useState<any>(null);
@@ -28,10 +29,11 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
       .logout()
       .then(() => {
         setUser(null);
+        toast.success("Logout Successful", { description: "You have been logged out" });
         router.push("/");
       })
       .catch((error: any) => {
-        //toast
+        toast.error(error.message);
       });
   };
 
@@ -59,7 +61,7 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
       <div className="flex items-center space-x-4 lg:space-x-6">
         {user ? (
           <>
-            <ModeToggle />
+            <ThemeToggle/>
             <p className="text-sm">
               Welcome,{" "}
               <span className="hover:text-primary font-medium transition-colors">
@@ -72,7 +74,7 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
           </>
         ) : (
           <>
-            <ModeToggle />
+            <ThemeToggle />
             <Link
               href="/"
               className="hover:text-primary text-sm font-medium transition-colors md:block hidden"
