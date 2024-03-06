@@ -32,7 +32,7 @@ export default function EditPage() {
             Register to Money Management
           </CardTitle>
           <CardDescription className="text-muted-foreground text-sm">
-            Don't worry your data is safe with us
+            Don&apos;t worry your data is safe with us
           </CardDescription>
         </CardHeader>
         <CardContent>

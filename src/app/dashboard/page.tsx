@@ -211,7 +211,7 @@ export default function Home() {
                         </CardDescription>
                       </div>
                       <CardDescription className="text-[#64ca75]">
-                        You've saved {totalDoc} transaction.
+                        You&apos;ve saved {totalDoc} transaction.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>

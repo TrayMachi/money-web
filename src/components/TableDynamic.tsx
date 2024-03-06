@@ -243,7 +243,7 @@ export function TableDynamic() {
         </TableHeader>
         <TableBody>
           {documents.map((data: any, index: number) => (
-            <ContextMenu>
+            <ContextMenu key={data["$id"]}>
               <TableRow key={data["$id"]}>
                 <ContextMenuTrigger>
                   <TableCell className="font-medium">{index + 1}</TableCell>
