@@ -5,6 +5,7 @@ import NavBar2 from "@/components/nav/NavBar";
 import { AuthService } from "@/service";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 const HomePage = () => {
   const [user, setUser] = useState<any>(null);
@@ -26,7 +27,7 @@ const HomePage = () => {
   return (
     <main className="overflow-hidden">
       <NavBar2 />
-      <>
+      <WavyBackground className="h-[100vh]">
         <section className="mt-[30vh] flex items-center justify-center">
           <div className=" text-center">
             <h1 className="mt-8 text-4xl font-semibold text-gray-950 md:text-5xl xl:text-5xl xl:[line-height:1.125] dark:text-white">
@@ -66,7 +67,10 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-      </>
+      </WavyBackground>
+      <div className="hidden md:block">
+        <Footer />
+      </div>
     </main>
   );
 };
