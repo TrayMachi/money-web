@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { DBService } from "@/service";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const dbService = new DBService();
 
@@ -20,10 +21,11 @@ const EditIncomeExpense: NextPage = () => {
     description: "",
     date: "",
   });
+  let timezone = new Date().toLocaleString();
 
   const handleSubmit = (data: any) => {
     if (!data.name || !data.amount || !data.date || !data.type || !data.category) {
-      return alert("Please fill all field");
+      toast.error("Please fill all the fields");
     }
 
     setLoading(true);
@@ -31,13 +33,13 @@ const EditIncomeExpense: NextPage = () => {
     dbService
       .update(id.toString(), data)
       .then(() => {
-        alert("Updated Successfully");
+        toast.success(`${data.name} has been updated`, { description: `Your new ${data.type} has been edited ${timezone}` });
         setLoading(false);
         router.push("/dashboard");
       })
       .catch(() => {
         setLoading(false);
-        alert("Something went wrong!\nPlease check your data");
+        toast.error("Error updating data");
       });
   };
 
@@ -99,28 +101,28 @@ const EditIncomeExpense: NextPage = () => {
               label: "Food & Beverages",
               type: "radio",
               placeholder: "",
-              value: "fnb",
+              value: "Food & Beverages",
             },
             {
               name: "category",
               label: "Entertainment",
               type: "radio",
               placeholder: "",
-              value: "entertainment",
+              value: "Entertainment",
             },
             {
               name: "category",
               label: "Fashion",
               type: "radio",
               placeholder: "",
-              value: "fashion",
+              value: "Fashion",
             },
             {
               name: "category",
               label: "Transportation",
               type: "radio",
               placeholder: "",
-              value: "transportation",
+              value: "Transportation",
             },
             {
               name: "category",

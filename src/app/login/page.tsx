@@ -23,7 +23,7 @@ const LoginPage = () => {
     authService
       .login(email, password)
       .then(() => {
-        toast.success("Login Successful");
+        toast.message("Login Successful", {description: "Welcome to Money Management"});
         setLoading(false);
         router.push("/dashboard");
       })

@@ -30,9 +30,9 @@ const RegisterPage = () => {
     setLoading(true);
     authService
       .register(userData)
-      .then((res: any) => {
+      .then(() => {
         setLoading(false);
-        toast.success("Registeration Successful")
+        toast.success("Registeration Successful", {description: "Enjoy saving your money"})
         router.push("/login");
       })
       .catch((error: any) => {
