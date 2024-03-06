@@ -1,66 +1,44 @@
-"use client";
-import Form from "@/components/Form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { AuthService } from "@/service";
-import { toast } from "sonner";
+import LoginForm from "@/components/LoginForm";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import { IoMdArrowRoundBack, IoMdArrowForward  } from "react-icons/io";
 
-const LoginPage = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const router = useRouter();
-
-  const handleSubmit = async (data: any) => {
-    const { email, password } = data;
-
-    if (!email || !password) {
-      return toast.error("Please fill all fields");
-    }
-
-    const authService = AuthService.getInstance();
-
-    setLoading(true);
-    authService
-      .login(email, password)
-      .then(() => {
-        toast.message("Login Successful", {description: "Welcome to Money Management"});
-        setLoading(false);
-        router.push("/dashboard");
-      })
-      .catch((error: any) => {
-        if (error.message.includes("Invalid credentials")) {
-          toast.error("Invalid Credentials");
-        }
-        setLoading(false);
-      });
-  };
-
+export default function EditPage() {
   return (
-    <div className="flex min-h-screen flex-col justify-center">
-      <h1 className="mb-8 text-center text-7xl font-bold text-gray-800">
-        Login Page
-      </h1>
-      <Form
-        loading={loading}
-        onSubmit={handleSubmit}
-        fields={[
-          {
-            name: "email",
-            label: "Email",
-            type: "email",
-            placeholder: "Enter your email",
-          },
-          {
-            name: "password",
-            label: "Password",
-            type: "Password",
-            placeholder: "Enter your password",
-          },
-        ]}
-        btnTitle="Login"
-      ></Form>
-    </div>
+    <main>
+      <Card className="mx-[10vw] my-[10vh] md:mx-[30vw] md:mt-[25vh]">
+        <div className="flex justify-between">
+          <Link
+            href="/"
+            className="text-muted-foreground hover:text-primary flex items-center pl-4 pt-6 text-sm transition-colors"
+          >
+            <IoMdArrowRoundBack /> Back
+          </Link>
+          <Link
+            href="/register"
+            className="text-muted-foreground hover:text-primary flex items-center pr-4 pt-6 text-sm transition-colors"
+          >
+            Register{" "}<IoMdArrowForward />
+          </Link>
+        </div>
+        <CardHeader className="flex flex-col items-center justify-center space-y-0 pb-2">
+          <CardTitle className="text-2xl font-medium">
+            Welcome Back to Money Management
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            Ready save your money?
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <LoginForm />
+        </CardContent>
+      </Card>
+    </main>
   );
-};
-
-export default LoginPage;
+}

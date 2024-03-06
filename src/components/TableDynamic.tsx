@@ -283,7 +283,7 @@ export function TableDynamic() {
                     <ContextMenuItem>Delete</ContextMenuItem>
                   </AlertDialogTrigger>
                   <ContextMenuItem>
-                    <Link href={`dashboard/records/edit/${data["$id"]}`}>
+                    <Link href={`dashboard/transaction/edit/${data["$id"]}`}>
                       Edit
                     </Link>
                   </ContextMenuItem>

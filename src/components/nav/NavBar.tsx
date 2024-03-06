@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { ThemeToggle } from "../ThemeToggle";
 import { AuthService } from "@/service";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 import { toast } from "sonner";
 
 function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
@@ -14,6 +14,7 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const { id } = useParams();
 
   const fetchUser = async () => {
     try {
@@ -38,6 +39,12 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   };
 
   const displayLogOut = pathname === "/dashboard" ? "hidden" : "";
+  const displayLogOut2 = pathname === "/dashboard/transaction/new" ? "hidden" : "";
+  let displayLogOut3 = "";
+  if(id) {
+    displayLogOut3 = pathname === `/dashboard/transaction/edit/${id.toString()}` ? "hidden" : "";
+  }
+
 
   useEffect(() => {
     fetchUser();
@@ -68,7 +75,7 @@ function NavBar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
                 {user.name}
               </span>
             </p>
-            <button onClick={() => logOut()} className={`hover:text-[#a03f3f] font-medium text-sm transition-colors ${displayLogOut}`}>
+            <button onClick={() => logOut()} className={`hover:text-[#a03f3f] font-medium text-sm transition-colors ${displayLogOut} ${displayLogOut2} ${displayLogOut3}`}>
               Logout
             </button>
           </>

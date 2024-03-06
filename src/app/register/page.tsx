@@ -1,83 +1,44 @@
-"use client";
-import Form from "@/components/Form";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import RegisterForm from "@/components/RegisterForm";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import { IoMdArrowRoundBack, IoMdArrowForward  } from "react-icons/io";
 
-import { AuthService } from "@/service";
-
-const RegisterPage = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const router = useRouter();
-
-  const handleSubmit = async (data: any) => {
-    const { userId, name, email, password } = data;
-
-    if (!userId || !name || !email || !password) {
-      return toast.error("Please fill all fields");
-    }
-
-    const authService = AuthService.getInstance();
-
-    const userData = {
-      email,
-      password,
-      userId,
-      name,
-    };
-
-    setLoading(true);
-    authService
-      .register(userData)
-      .then(() => {
-        setLoading(false);
-        toast.success("Registeration Successful", {description: "Enjoy saving your money"})
-        router.push("/login");
-      })
-      .catch((error: any) => {
-        toast.error(error.message);
-        setLoading(false);
-      });
-  };
+export default function EditPage() {
   return (
-    <div className="flex min-h-screen flex-col justify-center">
-      <h1 className="mb-8 text-center text-7xl font-bold text-gray-800">
-        Register Page
-      </h1>
-      <Form
-        fields={[
-          {
-            name: "userId",
-            label: "Username",
-            type: "text",
-            placeholder: "Enter your username",
-          },
-          {
-            name: "name",
-            label: "Full Name",
-            type: "text",
-            placeholder: "Enter your full name",
-          },
-          {
-            name: "email",
-            label: "Email",
-            type: "email",
-            placeholder: "Enter your email",
-          },
-          {
-            name: "password",
-            label: "Password",
-            type: "Password",
-            placeholder: "Enter your password",
-          },
-        ]}
-        btnTitle="Register"
-        onSubmit={handleSubmit}
-        loading={loading}
-      ></Form>
-    </div>
+    <main>
+      <Card className="mx-[10vw] my-[10vh] md:mx-[30vw] md:mt-[15vh]">
+        <div className="flex justify-between">
+          <Link
+            href="/"
+            className="text-muted-foreground hover:text-primary flex items-center pl-4 pt-6 text-sm transition-colors"
+          >
+            <IoMdArrowRoundBack /> Back
+          </Link>
+          <Link
+            href="/login"
+            className="text-muted-foreground hover:text-primary flex items-center pr-4 pt-6 text-sm transition-colors"
+          >
+            Login{" "}<IoMdArrowForward />
+          </Link>
+        </div>
+        <CardHeader className="flex flex-col items-center justify-center space-y-0 pb-2">
+          <CardTitle className="text-2xl font-medium">
+            Register to Money Management
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            Don't worry your data is safe with us
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <RegisterForm />
+        </CardContent>
+      </Card>
+    </main>
   );
-};
-
-export default RegisterPage;
+}

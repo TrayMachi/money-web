@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NavBar from "@/components/nav/NavBar";
 import SideNav from "@/components/nav/sidenav/SideNav";
+import { toast } from "sonner";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -49,6 +51,7 @@ export default function Home() {
         })
         .catch((error: any) => console.log(error));
     } catch {
+      toast.warning("You are not logged in");
       router.push("/login");
     }
   };
@@ -91,7 +94,7 @@ export default function Home() {
     <main>
       <NavBar />
       <SideNav />
-      <div className="mt-24 overflow-y-hidden">
+      <div className="mt-24">
         {user ? (
           <div className="flex h-auto w-full flex-col items-center gap-10 px-14">
             <div className="flex-1 space-y-4 p-8 pt-6">
@@ -100,7 +103,7 @@ export default function Home() {
               </div>
               <div className="grid w-full grid-cols-2 gap-4">
                 <div className="col-span-2 xl:col-span-1">
-                  <div className="grid grid-cols-1 gap-4 xl:w-[40vw] xl:grid-cols-3">
+                  <div className="grid w-[65vw] grid-cols-1 gap-4 md:w-full xl:w-[40vw] xl:grid-cols-3">
                     <Card className="">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -188,6 +191,9 @@ export default function Home() {
                     <Card className="xl:col-span-3">
                       <CardHeader>
                         <CardTitle>Overview</CardTitle>
+                        <CardDescription className="text-muted-foreground text-start text-xs">
+                          Your statistic overview based on your category
+                        </CardDescription>
                       </CardHeader>
                       <CardContent className="pl-2">
                         <Charts />
@@ -195,7 +201,7 @@ export default function Home() {
                     </Card>
                   </div>
                 </div>
-                <div className="col-span-2 xl:col-span-1 xl:w-[40vw]">
+                <div className="col-span-2 w-[65vw] md:w-full xl:col-span-1 xl:w-[40vw]">
                   <Card className="h-full">
                     <CardHeader className="justify-between">
                       <div className="flex justify-between">
@@ -220,6 +226,7 @@ export default function Home() {
           <></>
         )}
       </div>
+      <Footer />
     </main>
   );
 }

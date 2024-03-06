@@ -5,9 +5,30 @@ import { MdDashboard } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import Link from "next/link";
+import { AuthService } from "@/service";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SideNav = () => {
   const [selected, setSelected] = useState(0);
+
+  const authService = AuthService.getInstance();
+  const router = useRouter();
+
+  const logOut = async () => {
+    authService
+      .logout()
+      .then(() => {
+        toast.success("Logout Successful", {
+          description: "You have been logged out",
+        });
+        router.push("/");
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <nav className="fixed mx-2 rounded-lg border border-zinc-200 text-slate-100 dark:border-zinc-800">
       <div className="flex h-full w-fit flex-col items-center gap-4 p-2 md:p-4">
@@ -19,9 +40,11 @@ const SideNav = () => {
             <FaPlus className="fill-white dark:fill-zinc-950" />
           </NavItem>
         </Link>
-        <NavItem selected={selected === 2} id={2} setSelected={setSelected}>
-          <RiLogoutBoxLine className="fill-white dark:fill-zinc-950" />
-        </NavItem>
+        <button onClick={logOut}>
+          <NavItem selected={selected === 2} id={2} setSelected={setSelected}>
+            <RiLogoutBoxLine className="fill-white dark:fill-zinc-950" />
+          </NavItem>
+        </button>
       </div>
     </nav>
   );

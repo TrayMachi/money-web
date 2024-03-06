@@ -130,7 +130,7 @@ export function Charts() {
             cy="50%"
             labelLine={false}
             label={labelFormat}
-            outerRadius={120}
+            outerRadius={100}
             dataKey="value"
             legendType="circle"
           >
