@@ -65,7 +65,7 @@ const FormSchema = z.object({
   category: z.string({
     required_error: "Please select a category.",
   }),
-  amount: z.number({
+  amount: z.any({
     required_error: "Please enter an amount.",
   }),
   description: z.string().max(100, { message: "Description is too long." }),
