@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/utils/cn";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Analytics />
       <body
         className={cn(
           "bg-background min-h-screen font-sans antialiased",
