@@ -65,7 +65,7 @@ const FormSchema = z.object({
   category: z.string({
     required_error: "Please select a category.",
   }),
-  amount: z.string({
+  amount: z.number({
     required_error: "Please enter an amount.",
   }),
   description: z.string().max(100, { message: "Description is too long." }),
@@ -99,7 +99,6 @@ const EditForm: NextPage = () => {
             category: res.category,
             amount: res.amount,
             description: res.description,
-            date: res.date,
           };
           form.reset(defaultValues);
         })
