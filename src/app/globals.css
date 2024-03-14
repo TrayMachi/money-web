@@ -36,6 +36,7 @@
   }
 
   .dark {
+    background: #09090b;
     --background: #09090b;
     --foreground: 210 40% 98%;
 
